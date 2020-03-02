@@ -54,7 +54,7 @@ function DevForm({ onSubmit, onGetDev }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} onGetDev={handleGetDev}>
       <div className="input-block">
         <label htmlFor="github_username">Usuário do Github</label>
         <input

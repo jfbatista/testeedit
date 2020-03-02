@@ -29,11 +29,15 @@ function App() {
     setDevs([...devs, response.data]);
   }
 
+  async function handleGetDev(data) {
+    console.log(data);
+  }
+
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
-        <DevForm onSubmit={handleAddDev} />
+        <DevForm onSubmit={handleAddDev} onGetDev={handleGetDev}/>
       </aside>
 
       <main>
