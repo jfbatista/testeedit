@@ -5,8 +5,15 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
 import './styles.css';
 
-function DevItem({ dev }) {
+function DevItem({ dev, removeDev, handleUpdateDev }) {
   const onClick = function () { console.log(dev) };
+
+  async function remDev(e) {
+    e.preventDefault();
+    //console.log(e);
+    const github_username = e.target.value;
+    await removeDev(github_username);
+  }
 
   return (
     <li className="dev-item">
@@ -21,8 +28,8 @@ function DevItem({ dev }) {
       <div className="app-states">
         <footer>
           <div><a href={`https://github.com/${dev.github_username}`} target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faGithub} size="2x" color="blue" /></a></div>
-          <div><FontAwesomeIcon icon={faEdit} size="2x" color="green" onClick={onClick} /></div>
-          <div><FontAwesomeIcon icon={faMinusCircle} size="2x" color="red  " /></div>
+          <div><FontAwesomeIcon icon={faEdit} size="2x" color="green" /></div>
+          <div><FontAwesomeIcon icon={faMinusCircle} size="2x" color="red  " onClick={remDev} /></div>
         </footer>
       </div>
 

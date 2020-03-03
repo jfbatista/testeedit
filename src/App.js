@@ -33,17 +33,40 @@ function App() {
     console.log(data);
   }
 
+  async function handleUpdateDev(data) {
+    let response = await api.put('/devs/update', data);
+    response = await api.get('/devs');
+
+    setDevs(response.data);
+  }
+
+  async function removeDev(data) {
+
+    const github_username = data;
+
+    const response = await api.delete(`/devs/${github_username}`);
+    //console.log(response.data);
+    var i = response.data._id;
+    var listDevs = [...devs];
+    var index = listDevs.findIndex(dev => dev._id === i);
+    //console.log(index);
+    listDevs.splice(index, 1);
+    setDevs(listDevs);
+    //console.log(i);
+
+  }
+
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
-        <DevForm onSubmit={handleAddDev} onGetDev={handleGetDev}/>
+        <DevForm onSubmit={handleAddDev} onGetDev={handleGetDev} />
       </aside>
 
       <main>
         <ul>
           {devs.map(dev => (
-            <DevItem key={dev._id} dev={dev} />
+            <DevItem key={dev._id} dev={dev} removeDev={removeDev} handleUpdateDev={handleUpdateDev} />
           ))}
         </ul>
       </main>
