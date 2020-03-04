@@ -23,15 +23,11 @@ function App() {
   }, []);
 
   async function handleAddDev(data) {
-    console.log(data);
     const response = await api.post('/devs', data)
 
     setDevs([...devs, response.data]);
   }
 
-  async function handleGetDev(data) {
-    console.log(data);
-  }
 
   async function handleUpdateDev(data) {
     let response = await api.put('/devs/update', data);
@@ -39,34 +35,29 @@ function App() {
 
     setDevs(response.data);
   }
+  
+  async function removeDev(dev, index) {
 
-  async function removeDev(data) {
-
-    const github_username = data;
+    const { github_username } = dev;    
 
     const response = await api.delete(`/devs/${github_username}`);
-    //console.log(response.data);
-    var i = response.data._id;
-    var listDevs = [...devs];
-    var index = listDevs.findIndex(dev => dev._id === i);
-    //console.log(index);
+
+    const listDevs = Array.from(devs);
     listDevs.splice(index, 1);
     setDevs(listDevs);
-    //console.log(i);
-
   }
 
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
-        <DevForm onSubmit={handleAddDev} onGetDev={handleGetDev} />
+        <DevForm onSubmit={handleAddDev} />
       </aside>
 
       <main>
         <ul>
-          {devs.map(dev => (
-            <DevItem key={dev._id} dev={dev} removeDev={removeDev} handleUpdateDev={handleUpdateDev} />
+          {devs.map((dev, index) => (
+            <DevItem key={dev._id} dev={dev} removeDev={() => removeDev(dev, index)} />
           ))}
         </ul>
       </main>

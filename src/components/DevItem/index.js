@@ -6,13 +6,10 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import './styles.css';
 
 function DevItem({ dev, removeDev, handleUpdateDev }) {
-  const onClick = function () { console.log(dev) };
-
+  
   async function remDev(e) {
     e.preventDefault();
-    //console.log(e);
-    const github_username = e.target.value;
-    await removeDev(github_username);
+    await removeDev(dev);
   }
 
   return (
@@ -32,7 +29,6 @@ function DevItem({ dev, removeDev, handleUpdateDev }) {
           <div><FontAwesomeIcon icon={faMinusCircle} size="2x" color="red  " onClick={remDev} /></div>
         </footer>
       </div>
-
     </li>
   );
 }
